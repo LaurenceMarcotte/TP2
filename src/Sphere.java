@@ -2,15 +2,18 @@ public class Sphere {
     private double x, y;
     private double r;
 
-    private double vx = 500, vy = 190;
+    private double vx, vy;
 
     // Gravité
-    private double ay = 200;
+    private double ay;
 
     public Sphere(double x, double y, double r, double vx, double vy, double ay) {
         this.x = x;
         this.y = y;
         this.r = r;
+        this.vx = vx;
+        this.vy = vy;
+        this.ay = ay;
     }
 
     public void update(double dt, int width, int height) {
@@ -49,43 +52,51 @@ public class Sphere {
         return d2 < (this.r + other.r) * (this.r + other.r);
     }
 
-    /**
-     * Interchange les vitesses s'il y a collision entre les deux balles
-     *
-     * @param other l'autre balle
-     */
-    public void testCollision(Sphere other) {
-        if (this.intersects(other)) {
-            double vx = this.vx;
-            double vy = this.vy;
+    public double getX() {
+        return x;
+    }
 
-            this.vx = other.vx;
-            this.vy = other.vy;
+    public double getY() {
+        return y;
+    }
 
-            other.vx = vx;
-            other.vy = vy;
+    public double getR() {
+        return r;
+    }
 
-            // Calculer la quantité qui overlap en X, same en Y
-            // Déplacer les deux de ces quantités/2
-            double dx = other.x - this.x;
-            double dy = other.y - this.y;
-            double d2 = dx * dx + dy * dy;
-            double d = Math.sqrt(d2);
+    public double getVx() {
+        return vx;
+    }
 
-            // Overlap en pixels
-            double overlap = d - (this.r + other.r);
+    public double getVy() {
+        return vy;
+    }
 
-            // Direction dans laquelle se déplacer (normalisée)
-            double directionX = dx / d;
-            double directionY = dy / d;
+    public double getAy() {
+        return ay;
+    }
 
-            double deplacementX = directionX * overlap / 2;
-            double deplacementY = directionY * overlap / 2;
+    public void setX(double x) {
+        this.x = x;
+    }
 
-            this.x += deplacementX;
-            this.y += deplacementY;
-            other.x -= deplacementX;
-            other.y -= deplacementY;
-        }
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setR(double r) {
+        this.r = r;
+    }
+
+    public void setVx(double vx) {
+        this.vx = vx;
+    }
+
+    public void setVy(double vy) {
+        this.vy = vy;
+    }
+
+    public void setAy(double ay) {
+        this.ay = ay;
     }
 }
