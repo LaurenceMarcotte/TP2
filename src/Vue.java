@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,7 +21,6 @@ public class Vue extends Application {
         VBox root = new VBox();
         Scene scene = new Scene(root, 640, 440);
         Canvas canvas = new Canvas(640,400);
-        HBox barre = new HBox();
 
         Image ghost = new Image("file:ghost.png");
 
@@ -28,9 +28,12 @@ public class Vue extends Application {
         Image background = new Image("file:bg.png");
         context.drawImage(background, 0,0);
 
+        HBox barre = new HBox(20);
         Button pause = new Button("pause");
         CheckBox modeDebug = new CheckBox("Mode debug");
         Text score = new Text("Score: 0");
+        barre.setAlignment(Pos.CENTER);
+
         barre.getChildren().addAll(pause, modeDebug, score);
         root.getChildren().addAll(canvas, barre);
 

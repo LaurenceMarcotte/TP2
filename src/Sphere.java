@@ -24,12 +24,12 @@ public class Sphere {
         x += dt * vx;
         y += dt * vy;
 
-        if (x + r > width || x - r < 0) {
+       /* if (x + r > width || x - r < 0) {
             vx *= -0.9;
         }
         if (y + r > height || y - r < 0) {
             vy *= -0.9;
-        }
+        }*/
 
         x = Math.min(x, width - r);
         x = Math.max(x, r);
