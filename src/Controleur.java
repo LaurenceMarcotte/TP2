@@ -16,7 +16,7 @@ public class Controleur {
      */
     public void update(double deltaTime){
         double[] positions = jeu.updatePosition(deltaTime, vue.getHEIGHT());
-        System.out.println(positions[0]);
+        System.out.println(positions[1]);
         vue.update(positions[0], positions[1], positions[2]);
     }
 

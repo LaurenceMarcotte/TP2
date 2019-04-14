@@ -72,6 +72,10 @@ public class Vue extends Application {
             }
             else{
                 pause.setText("Pause");
+                /* Après l’exécution de la fonction, le focus va automatiquement au canvas */
+                Platform.runLater(() -> {
+                    canvas.requestFocus();
+                });
             }
         }));
 
@@ -110,6 +114,7 @@ public class Vue extends Application {
         Platform.runLater(() -> {
             canvas.requestFocus();
         });
+
         /* Lorsqu’on clique ailleurs sur la scène, le focus retourne sur le canvas */
         scene.setOnMouseClicked((event) -> {
             canvas.requestFocus();
