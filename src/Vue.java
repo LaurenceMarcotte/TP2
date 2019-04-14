@@ -17,7 +17,20 @@ import javafx.stage.Stage;
 
 public class Vue extends Application {
 
-    public static final int WIDTH = 640, HEIGHT = 400;
+    private static final int WIDTH = 640, HEIGHT = 400;
+
+    private Stage stage;
+    private Scene scene;
+    private Canvas canvas;
+    private GraphicsContext context;
+
+    private Image ghost = new Image("file:ghost.png");
+    private Image background = new Image("file:bg.png");
+
+    private double positionBg = 0;
+
+
+    private boolean pause = false;
 
     private Controleur controleur;
 
@@ -27,24 +40,19 @@ public class Vue extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         VBox root = new VBox(5);
-        Scene scene = new Scene(root, WIDTH, HEIGHT+40);
-        Canvas canvas = new Canvas(WIDTH,HEIGHT);
+        this.stage = stage;
+        scene = new Scene(root, WIDTH, HEIGHT+40);
+        canvas = new Canvas(WIDTH,HEIGHT);
+        controleur = new Controleur(this);
 
-        Image ghost = new Image("file:ghost.png");
+        context = canvas.getGraphicsContext2D();
 
-        GraphicsContext context = canvas.getGraphicsContext2D();
-        Image background = new Image("file:bg.png");
-
-        context.drawImage(background, 0, 0);
-        /*System.out.println(background.getWidth());
-        context.drawImage(background, 320, 0,
-                background.getWidth()/2, background.getHeight(),
-                0,0,320,400);*/
+        context.drawImage(background, positionBg, 0);
 
         context.drawImage(ghost, WIDTH/2-ghost.getWidth()/2, HEIGHT/2-ghost.getHeight()/2);
 
         HBox barre = new HBox(20); //20 est le spacing entre les éléments
-        Button pause = new Button("pause");
+        Button pause = new Button("Pause");
         CheckBox modeDebug = new CheckBox("Mode debug");
         Text score = new Text("Score: 0");
         barre.setAlignment(Pos.CENTER);
@@ -53,7 +61,11 @@ public class Vue extends Application {
                 new Separator(Orientation.VERTICAL), score);
         root.getChildren().addAll(canvas, barre);
 
-        /*AnimationTimer timer = new AnimationTimer() {
+        pause.setOnAction((actionEvent -> {
+            pause.setText("Resume");
+        }));
+
+        AnimationTimer timer = new AnimationTimer() {
             private long lastTime = 0;
 
             @Override
@@ -67,9 +79,10 @@ public class Vue extends Application {
 
                 controleur.update(deltaTime);
 
-
+                lastTime = now;
             }
-        };*/
+        };
+        timer.start();
         stage.setTitle("Flappy Ghost");
         stage.getIcons().add(ghost);
         stage.setScene(scene);
@@ -78,8 +91,20 @@ public class Vue extends Application {
 
     }
 
-    public void update(){
+    public void update(double posXGhost, double posYGhost, double deltaXGhost){
+        positionBg += deltaXGhost;
+        if(positionBg>=WIDTH){
+            positionBg = positionBg-WIDTH;
+        }
+        if(positionBg==0){
+            context.drawImage(background, 0,0);
+        }
+        context.drawImage(background, positionBg, 0, background.getWidth()-positionBg, background.getHeight(),
+                0,0,background.getWidth()-positionBg, HEIGHT);
+        context.drawImage(background, 0, 0, positionBg, background.getHeight(),
+                background.getWidth()-positionBg, 0, positionBg, HEIGHT);
 
+        context.drawImage(ghost, WIDTH/2-ghost.getWidth()/2, posYGhost-ghost.getHeight()/2);
     }
 
     public static int getWIDTH() {

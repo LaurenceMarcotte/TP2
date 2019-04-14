@@ -4,14 +4,19 @@ public class Controleur {
 
     private Modele jeu;
 
+    public Controleur(Vue vue){
+        this.vue = vue;
+        this.jeu = new Modele(vue.getWIDTH(), vue.getHEIGHT());
+    }
+
     /**
      * update la position du background, du fantome et des obstacles dans la vue.
      *
      * @param deltaTime temps écoulé depuis la dernière update.
      */
     public void update(double deltaTime){
-        //TODO
-        int[] positions = jeu.updatePosition(deltaTime, vue.getWIDTH(), vue.getHEIGHT());
-        vue.update();
+        double[] positions = jeu.updatePosition(deltaTime, vue.getWIDTH(), vue.getHEIGHT());
+        System.out.println(positions[0]);
+        vue.update(positions[0], positions[1], positions[2]);
     }
 }
