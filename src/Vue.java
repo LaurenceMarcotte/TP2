@@ -1,12 +1,15 @@
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -23,7 +26,7 @@ public class Vue extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
-        VBox root = new VBox();
+        VBox root = new VBox(5);
         Scene scene = new Scene(root, WIDTH, HEIGHT+40);
         Canvas canvas = new Canvas(WIDTH,HEIGHT);
 
@@ -40,16 +43,17 @@ public class Vue extends Application {
 
         context.drawImage(ghost, WIDTH/2-ghost.getWidth()/2, HEIGHT/2-ghost.getHeight()/2);
 
-        HBox barre = new HBox(20);
+        HBox barre = new HBox(20); //20 est le spacing entre les éléments
         Button pause = new Button("pause");
         CheckBox modeDebug = new CheckBox("Mode debug");
         Text score = new Text("Score: 0");
         barre.setAlignment(Pos.CENTER);
 
-        barre.getChildren().addAll(pause, modeDebug, score);
+        barre.getChildren().addAll(pause, new Separator(Orientation.VERTICAL), modeDebug,
+                new Separator(Orientation.VERTICAL), score);
         root.getChildren().addAll(canvas, barre);
 
-        AnimationTimer timer = new AnimationTimer() {
+        /*AnimationTimer timer = new AnimationTimer() {
             private long lastTime = 0;
 
             @Override
@@ -65,13 +69,24 @@ public class Vue extends Application {
 
 
             }
-        };
-
+        };*/
         stage.setTitle("Flappy Ghost");
         stage.getIcons().add(ghost);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
 
+    }
+
+    public void update(){
+
+    }
+
+    public static int getWIDTH() {
+        return WIDTH;
+    }
+
+    public static int getHEIGHT() {
+        return HEIGHT;
     }
 }
