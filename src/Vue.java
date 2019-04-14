@@ -1,5 +1,4 @@
 import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Orientation;
@@ -12,12 +11,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class Vue extends Application {
 
@@ -31,9 +28,10 @@ public class Vue extends Application {
     private Image ghost = new Image("file:ghost.png");
     private Image background = new Image("file:bg.png");
 
+    //position du fantôme par rapport au background
     private double positionBg = 0;
 
-
+    //Est-ce que l'animation a été mise sur pause
     private boolean isPause = false;
 
     private Controleur controleur;
@@ -41,6 +39,7 @@ public class Vue extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void start(Stage stage) throws Exception {
         VBox root = new VBox(5);
@@ -50,10 +49,6 @@ public class Vue extends Application {
         controleur = new Controleur(this);
 
         context = canvas.getGraphicsContext2D();
-
-        context.drawImage(background, positionBg, 0);
-
-        context.drawImage(ghost, WIDTH/2-ghost.getWidth()/2, HEIGHT/2-ghost.getHeight()/2);
 
         HBox barre = new HBox(20); //20 est le spacing entre les éléments
         Button pause = new Button("Pause");
@@ -129,18 +124,27 @@ public class Vue extends Application {
     }
 
     public void update(double posXGhost, double posYGhost, double deltaXGhost){
+
+        //on avance la position de la variable pour trouver où est le fantôme par rapport au background
         positionBg += deltaXGhost;
+
+        /*Dans le cas où on passe au travers de l'image du background, la variable qui suit la position
+        *dans le background en x retourne au début de l'image.
+        */
         if(positionBg>=WIDTH){
             positionBg = positionBg-WIDTH;
         }
-        if(positionBg==0){
-            context.drawImage(background, 0,0);
-        }
+
+        /*On coupe le background en 2 images, la première est positionnée à gauche de la fenêtre, soit à la
+        * position (0,0) et on ne prend que la partie sur laquelle le fantôme n'est pas encore allée. La
+        * deuxième est la partie coupée qui a été coupée à la première image que l'on positionne à droite
+        * dans la fenêtre.*/
         context.drawImage(background, positionBg, 0, background.getWidth()-positionBg, background.getHeight(),
                 0,0,background.getWidth()-positionBg, HEIGHT);
         context.drawImage(background, 0, 0, positionBg, background.getHeight(),
                 background.getWidth()-positionBg, 0, positionBg, HEIGHT);
 
+        //Dessin du fantôme
         context.drawImage(ghost, WIDTH/2-ghost.getWidth()/2, posYGhost-ghost.getHeight()/2);
     }
 
