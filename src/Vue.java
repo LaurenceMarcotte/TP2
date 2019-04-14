@@ -34,6 +34,9 @@ public class Vue extends Application {
     //Est-ce que l'animation a été mise sur pause
     private boolean isPause = false;
 
+    private CheckBox modeDebug;
+
+    private double r = 30;
     private Controleur controleur;
 
     public static void main(String[] args) {
@@ -52,7 +55,8 @@ public class Vue extends Application {
 
         HBox barre = new HBox(20); //20 est le spacing entre les éléments
         Button pause = new Button("Pause");
-        CheckBox modeDebug = new CheckBox("Mode debug");
+        modeDebug = new CheckBox("Mode debug");
+
         Text score = new Text("Score: 0");
         barre.setAlignment(Pos.CENTER);
 
@@ -88,12 +92,9 @@ public class Vue extends Application {
 
             @Override
             public void handle(long now) {
-                if (lastTime == 0) {
+                if (lastTime == 0 || isPause) {
                     lastTime = now;
                     return;
-                }
-                if(isPause){
-                    lastTime = now;
                 }
                 double deltaTime = (now - lastTime) * 1e-9;
                 context.clearRect(0, 0, WIDTH, HEIGHT);
@@ -144,8 +145,13 @@ public class Vue extends Application {
         context.drawImage(background, 0, 0, positionBg, background.getHeight(),
                 background.getWidth()-positionBg, 0, positionBg, HEIGHT);
 
-        //Dessin du fantôme
-        context.drawImage(ghost, WIDTH/2-ghost.getWidth()/2, posYGhost-ghost.getHeight()/2);
+        if(modeDebug.isSelected()){
+            context.fillOval(WIDTH/2 - r, posYGhost - r, 2*r,2*r);
+        }
+        else {
+            //Dessin du fantôme
+            context.drawImage(ghost, WIDTH / 2 - ghost.getWidth() / 2, posYGhost - ghost.getHeight() / 2);
+        }
     }
 
     public static int getWIDTH() {
