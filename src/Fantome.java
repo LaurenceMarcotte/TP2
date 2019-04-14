@@ -26,7 +26,7 @@ public class Fantome extends Sphere {
         }
 
         setY(Math.min(y, height - r));
-        setY(Math.max(y, r));
+        setY(Math.max(getY(), r));
     }
 
     @Override

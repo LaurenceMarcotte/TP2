@@ -1,5 +1,4 @@
 import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Orientation;
@@ -12,12 +11,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class Vue extends Application {
 
@@ -31,16 +28,21 @@ public class Vue extends Application {
     private Image ghost = new Image("file:ghost.png");
     private Image background = new Image("file:bg.png");
 
+    //position du fantôme par rapport au background
     private double positionBg = 0;
 
-
+    //Est-ce que l'animation a été mise sur pause
     private boolean isPause = false;
 
+    private CheckBox modeDebug;
+
+    private double r = 30;
     private Controleur controleur;
 
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void start(Stage stage) throws Exception {
         VBox root = new VBox(5);
@@ -51,13 +53,10 @@ public class Vue extends Application {
 
         context = canvas.getGraphicsContext2D();
 
-        context.drawImage(background, positionBg, 0);
-
-        context.drawImage(ghost, WIDTH/2-ghost.getWidth()/2, HEIGHT/2-ghost.getHeight()/2);
-
         HBox barre = new HBox(20); //20 est le spacing entre les éléments
         Button pause = new Button("Pause");
-        CheckBox modeDebug = new CheckBox("Mode debug");
+        modeDebug = new CheckBox("Mode debug");
+
         Text score = new Text("Score: 0");
         barre.setAlignment(Pos.CENTER);
 
@@ -72,6 +71,10 @@ public class Vue extends Application {
             }
             else{
                 pause.setText("Pause");
+                /* Après l’exécution de la fonction, le focus va automatiquement au canvas */
+                Platform.runLater(() -> {
+                    canvas.requestFocus();
+                });
             }
         }));
 
@@ -89,12 +92,9 @@ public class Vue extends Application {
 
             @Override
             public void handle(long now) {
-                if (lastTime == 0) {
+                if (lastTime == 0 || isPause) {
                     lastTime = now;
                     return;
-                }
-                if(isPause){
-                    lastTime = now;
                 }
                 double deltaTime = (now - lastTime) * 1e-9;
                 context.clearRect(0, 0, WIDTH, HEIGHT);
@@ -110,6 +110,7 @@ public class Vue extends Application {
         Platform.runLater(() -> {
             canvas.requestFocus();
         });
+
         /* Lorsqu’on clique ailleurs sur la scène, le focus retourne sur le canvas */
         scene.setOnMouseClicked((event) -> {
             canvas.requestFocus();
@@ -124,19 +125,33 @@ public class Vue extends Application {
     }
 
     public void update(double posXGhost, double posYGhost, double deltaXGhost){
+
+        //on avance la position de la variable pour trouver où est le fantôme par rapport au background
         positionBg += deltaXGhost;
+
+        /*Dans le cas où on passe au travers de l'image du background, la variable qui suit la position
+        *dans le background en x retourne au début de l'image.
+        */
         if(positionBg>=WIDTH){
             positionBg = positionBg-WIDTH;
         }
-        if(positionBg==0){
-            context.drawImage(background, 0,0);
-        }
+
+        /*On coupe le background en 2 images, la première est positionnée à gauche de la fenêtre, soit à la
+        * position (0,0) et on ne prend que la partie sur laquelle le fantôme n'est pas encore allée. La
+        * deuxième est la partie coupée qui a été coupée à la première image que l'on positionne à droite
+        * dans la fenêtre.*/
         context.drawImage(background, positionBg, 0, background.getWidth()-positionBg, background.getHeight(),
                 0,0,background.getWidth()-positionBg, HEIGHT);
         context.drawImage(background, 0, 0, positionBg, background.getHeight(),
                 background.getWidth()-positionBg, 0, positionBg, HEIGHT);
 
-        context.drawImage(ghost, WIDTH/2-ghost.getWidth()/2, posYGhost-ghost.getHeight()/2);
+        if(modeDebug.isSelected()){
+            context.fillOval(WIDTH/2 - r, posYGhost - r, 2*r,2*r);
+        }
+        else {
+            //Dessin du fantôme
+            context.drawImage(ghost, WIDTH / 2 - ghost.getWidth() / 2, posYGhost - ghost.getHeight() / 2);
+        }
     }
 
     public static int getWIDTH() {
