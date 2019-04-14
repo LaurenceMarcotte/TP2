@@ -1,5 +1,7 @@
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Vue extends Application {
 
@@ -30,7 +33,7 @@ public class Vue extends Application {
     private double positionBg = 0;
 
 
-    private boolean pause = false;
+    private boolean isPause = false;
 
     private Controleur controleur;
 
@@ -62,7 +65,13 @@ public class Vue extends Application {
         root.getChildren().addAll(canvas, barre);
 
         pause.setOnAction((actionEvent -> {
-            pause.setText("Resume");
+            isPause = !isPause;
+            if(isPause){
+                pause.setText("Resume");
+            }
+            else{
+                pause.setText("Pause");
+            }
         }));
 
         AnimationTimer timer = new AnimationTimer() {
@@ -74,6 +83,9 @@ public class Vue extends Application {
                     lastTime = now;
                     return;
                 }
+                if(isPause){
+                    lastTime = now;
+                }
                 double deltaTime = (now - lastTime) * 1e-9;
                 context.clearRect(0, 0, WIDTH, HEIGHT);
 
@@ -83,6 +95,16 @@ public class Vue extends Application {
             }
         };
         timer.start();
+
+        /* Après l’exécution de la fonction, le focus va automatiquement au canvas */
+        Platform.runLater(() -> {
+            canvas.requestFocus();
+        });
+        /* Lorsqu’on clique ailleurs sur la scène, le focus retourne sur le canvas */
+        scene.setOnMouseClicked((event) -> {
+            canvas.requestFocus();
+        });
+
         stage.setTitle("Flappy Ghost");
         stage.getIcons().add(ghost);
         stage.setScene(scene);
