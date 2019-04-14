@@ -17,4 +17,35 @@ public class Modele {
     public void vitesseGhost(){
         ghost.setVy(-300);
     }
+
+    /*
+    public Obstacle creerObstacle(){
+
+        double rayon= Math.floor(Math.random()*35)+10; // regarder si la valeer est ok
+
+        //on va utiliser un switch pour l'analyse du type d'objet
+
+        int objet= (int)Math.ceil(Math.random()*3); // le 3 représente le nb de types d'obstacles. à changer
+
+        Sphere obstacle;
+
+        double x= ------------; //position a determiner
+        double y= ------------;
+
+        //la vitesse n'est pas set ici. on la set en fonction du déroulement du jeu
+
+        switch(objet){
+
+            //obstacle simple
+            case 1: obstacle=new ObstacleSimple(x,y,rayon,0,0,0);
+                    break;
+
+            //obstacle sinus
+            case 2: obstacle= new ObstacleSin(x,y,rayon,0,Math.sin(),0); // sin à remplir
+
+            //obstacle quantique
+            case 3: obstacle= new ObstacleQuant(x,y,rayon,0,0); // à remplir
+        }
+    }*/
+
 }
