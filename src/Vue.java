@@ -16,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class Vue extends Application {
 
     private static final int WIDTH = 640, HEIGHT = 400;
@@ -27,6 +29,8 @@ public class Vue extends Application {
 
     private Image ghost = new Image("file:ghost.png");
     private Image background = new Image("file:bg.png");
+
+    private ArrayList<Image> obstacles = new ArrayList<>();
 
     //position du fantôme par rapport au background
     private double positionBg = 0;
@@ -87,8 +91,13 @@ public class Vue extends Application {
             }
         }));
 
+        for (int i = 0; i < 27; i++) {
+            obstacles.add(i, new Image("file:obstacle/"+i+".png"));
+        }
+
         AnimationTimer timer = new AnimationTimer() {
             private long lastTime = 0;
+            private int i = 0;
 
             @Override
             public void handle(long now) {
@@ -100,7 +109,6 @@ public class Vue extends Application {
                 context.clearRect(0, 0, WIDTH, HEIGHT);
 
                 controleur.update(deltaTime);
-
                 lastTime = now;
             }
         };
