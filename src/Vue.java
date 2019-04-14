@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -71,6 +72,15 @@ public class Vue extends Application {
             }
             else{
                 pause.setText("Pause");
+            }
+        }));
+
+        scene.setOnKeyPressed((keyEvent -> {
+            if(keyEvent.getCode() == KeyCode.SPACE){
+                controleur.vitesseGhost();
+            }
+            else if(keyEvent.getCode() == KeyCode.ESCAPE){
+                Platform.exit();
             }
         }));
 

@@ -15,8 +15,12 @@ public class Controleur {
      * @param deltaTime temps écoulé depuis la dernière update.
      */
     public void update(double deltaTime){
-        double[] positions = jeu.updatePosition(deltaTime, vue.getWIDTH(), vue.getHEIGHT());
+        double[] positions = jeu.updatePosition(deltaTime, vue.getHEIGHT());
         System.out.println(positions[0]);
         vue.update(positions[0], positions[1], positions[2]);
+    }
+
+    public void vitesseGhost(){
+        jeu.vitesseGhost();
     }
 }
