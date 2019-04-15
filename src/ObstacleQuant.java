@@ -11,18 +11,18 @@ public class ObstacleQuant extends Obstacle {
 
     private void quantique(boolean ordre) {
 
-        double aleatoire= Math.random()*30 -30;
+        double aleatoire= Math.random()*60 -30;
 
         if (ordre){
 
-            setX(origine+aleatoire);
+            setX(origine+aleatoire+Math.signum(aleatoire)*getR());
 
-        }else{ setY(origine+aleatoire);}
+        }else{ setY(origine+aleatoire+Math.signum(aleatoire)*getR());}
 
     }
 
     public void update(){
-
+        //pt un compteur pour faire le quantum ?
 
     }
 
