@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Vue extends Application {
 
@@ -30,7 +31,14 @@ public class Vue extends Application {
     private Image ghost = new Image("file:ghost.png");
     private Image background = new Image("file:bg.png");
 
-    private ArrayList<Image> obstacles = new ArrayList<>();
+    //les 27 images des obstacles
+    private ArrayList<Image> imageObstacles = new ArrayList<>();
+
+    //contient les images des obstacles qui sont actuellement dans le jeu
+    private HashMap<Integer, Image> obstacles = new HashMap<>();
+
+    //contient les positions des obstacles sur la fenêtre
+    private HashMap<Integer, int[]> posObstacles = new HashMap<>();
 
     //position du fantôme par rapport au background
     private double positionBg = 0;
@@ -92,12 +100,12 @@ public class Vue extends Application {
         }));
 
         for (int i = 0; i < 27; i++) {
-            obstacles.add(i, new Image("file:obstacle/"+i+".png"));
+            imageObstacles.add(i, new Image("file:obstacle/"+i+".png"));
         }
 
         AnimationTimer timer = new AnimationTimer() {
             private long lastTime = 0;
-            private int i = 0;
+
 
             @Override
             public void handle(long now) {
@@ -132,7 +140,7 @@ public class Vue extends Application {
 
     }
 
-    public void update(double posXGhost, double posYGhost, double deltaXGhost){
+    public void update(double posXGhost, double posYGhost, double deltaXGhost, HashMap<Integer, double[]> obs){
 
         //on avance la position de la variable pour trouver où est le fantôme par rapport au background
         positionBg += deltaXGhost;
@@ -158,7 +166,16 @@ public class Vue extends Application {
         }
         else {
             //Dessin du fantôme
-            context.drawImage(ghost, WIDTH / 2 - ghost.getWidth() / 2, posYGhost - ghost.getHeight() / 2);
+            context.drawImage(ghost, WIDTH / 2 - r / 2, posYGhost - r / 2, 2*r,2*r);
+        }
+        for (Integer i:obs.keySet()) {
+            if(!obstacles.containsKey(i)){
+                obstacles.put(i,imageObstacles.get((int)(Math.random()*27)));
+            }
+            double[] pos = obs.get(i);
+            double posX = pos[0]-posXGhost-pos[2]+WIDTH/2;
+            context.drawImage(obstacles.get(i), posX, pos[1]-pos[2], 2*pos[2], 2*pos[2]);
+            continue;
         }
     }
 

@@ -1,6 +1,7 @@
 public class ObstacleQuant extends Obstacle {
 
-    private int compteur;
+    //private int compteur;
+    private double compteur;
 
     private double origine;
 
@@ -11,7 +12,7 @@ public class ObstacleQuant extends Obstacle {
     }
 
 
-    private void quantique(boolean ordre) {
+/*    private void quantique(boolean ordre) {
 
         double aleatoireX= Math.random()*60 -30;
         double aleatoireY=Math.random()*60-30;
@@ -23,15 +24,26 @@ public class ObstacleQuant extends Obstacle {
 
         }
 
-    }
+    }*/
+
+        private void quantique(){
+            double aleatoireX= Math.random()*60 -30;
+            double aleatoireY=Math.random()*60-30;
+
+            setX(origine+aleatoireX+Math.signum(aleatoireX)*getR());
+            setY(origine+aleatoireY+Math.signum(aleatoireY)*getR());
+        }
 
 
     @Override
     public void update(double dt){
-        super.update(dt);
+        /*super.update(dt);
         compteur++;
-        quantique(compteur%3==0);
-
+        quantique(compteur%3==0);*/
+        compteur+=dt;
+        if(compteur>=0.2){
+            quantique();
+        }
     }
 
 

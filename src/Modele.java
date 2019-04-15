@@ -1,17 +1,23 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Modele {
     private Fantome ghost;
 
-    private ArrayList<Obstacle> obstacles =new ArrayList<>();
+    private double dtObstacle;
+
+    private int numeroObstacle;
+
+    private HashMap<Integer, Obstacle> obstacles = new HashMap<>();
 
     public Modele(int width, int height){
         this.ghost = new Fantome(width/2, height/2, 30, 120, 0, 500);
     }
 
-    public double[] updatePosition(double deltaTime, int height){
+    public double[] updateGhost(double deltaTime, int height){
         ghost.update(deltaTime, height);
         double[] positions = new double[3];
+        System.out.println(ghost.getVy());
         positions[0] = ghost.getX();
         positions[1] = ghost.getY();
         positions[2] = ghost.getVx()*deltaTime;
@@ -22,10 +28,40 @@ public class Modele {
         ghost.setVy(-300);
     }
 
+    public HashMap<Integer, double[]> updateObstacle(double dt, int width, int height){
+        dtObstacle+=dt;
+        if(dtObstacle>=3){
+            creerObstacle();
+            dtObstacle=0;
+        }
+
+        HashMap<Integer, double[]> o = new HashMap<>();
+
+        for (Obstacle obs: obstacles.values()) {
+            obs.update(dt);
+            obs.setDepasse(ghost);
+
+            //obstacle est rendu hors de la fenêtre à gauche
+            if(obs.getX() + obs.getR() - ghost.getX() < - width/2){
+                obstacles.remove(obs);
+            }
+        }
+
+        for (Integer i: obstacles.keySet()) {
+            double[] pos = new double[3];
+            Obstacle obs = obstacles.get(i);
+            pos[0] = obs.getX();
+            pos[1] = obs.getY();
+            pos[2] = obs.getR();
+            o.put(i, pos);
+        }
+
+        return o;
+    }
 
     public void creerObstacle(){
 
-        double rayon= Math.floor(Math.random()*35)+10; // regarder si la valeer est ok
+        double rayon= Math.floor(Math.random()*35)+10; // regarder si la valeur est ok
 
         //on va utiliser un switch pour l'analyse du type d'objet
 
@@ -44,17 +80,20 @@ public class Modele {
 
             //obstacle simple
             case 1: obstacle=new ObstacleSimple(x,y,rayon,0,0);
-                    obstacles.add(obstacle);
+                    obstacles.put(numeroObstacle, obstacle);
+                    numeroObstacle++;
                     break;
 
             //obstacle sinus
-            case 2: obstacle= new ObstacleSin(x,y,rayon,0,10,50); // omega=10 à tester
-                    obstacles.add(obstacle);
+            case 2: obstacle= new ObstacleSin(x,y,rayon,0,5,50); // omega=10 à tester
+                    obstacles.put(numeroObstacle, obstacle);
+                    numeroObstacle++;
                     break;
 
             //obstacle quantique
             case 3: obstacle= new ObstacleQuant(x,y,rayon,0,0); // à remplir
-                    obstacles.add(obstacle);
+                    obstacles.put(numeroObstacle, obstacle);
+                    numeroObstacle++;
                     break;
         }
 

@@ -3,6 +3,7 @@ public class ObstacleSin extends Obstacle {
     private double omega;
     private double amplitude;
     private double origine;
+    private double tempsEcoule;
 
 
 
@@ -15,9 +16,9 @@ public class ObstacleSin extends Obstacle {
 
     @Override
     public void update(double dt){
-
+        tempsEcoule+=dt;
         setX(getX()+dt*getVx());
-        setY(origine+amplitude*Math.sin(omega*dt));
+        setY(origine+amplitude*Math.sin(omega*tempsEcoule));
 
     }
 

@@ -14,14 +14,13 @@ public class Obstacle extends Sphere {
 
         setX(getX() + getVx() * dt);
         setY(getY() + getVy() * dt);
-
     }
 
     public boolean getDepasse() {
         return depasse;
     }
 
-    private void setDepasse(Fantome boo) {
+    public void setDepasse(Fantome boo) {
 
         if ((boo.getX()-boo.getR()) > (this.getX()+this.getR())) {
             depasse = true;
