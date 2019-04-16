@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -140,7 +141,7 @@ public class Vue extends Application {
     }
 
     public void update(double posXGhost, double posYGhost, double deltaXGhost, HashMap<Integer, double[]> obs,
-                       int score){
+                       int score, HashMap<Integer, Boolean> collision){
 
         //on avance la position de la variable pour trouver où est le fantôme par rapport au background
         positionBg += deltaXGhost;
@@ -162,19 +163,37 @@ public class Vue extends Application {
                 background.getWidth()-positionBg, 0, positionBg, HEIGHT);
 
         if(modeDebug.isSelected()){
+            if(collision.containsValue(true)){
+                context.setFill(Color.RED);
+            }
+            else{
+                context.setFill(Color.BLACK);
+            }
             context.fillOval(WIDTH/2 - r, posYGhost - r, 2*r,2*r);
         }
         else {
             //Dessin du fantôme
             context.drawImage(ghost, WIDTH / 2 - r / 2, posYGhost - r / 2, 2*r,2*r);
         }
+
         for (Integer i:obs.keySet()) {
             if(!obstacles.containsKey(i)){
                 obstacles.put(i,imageObstacles.get((int)(Math.random()*27)));
             }
             double[] pos = obs.get(i);
             double posX = pos[0]-posXGhost-pos[2]+WIDTH/2;
-            context.drawImage(obstacles.get(i), posX, pos[1]-pos[2], 2*pos[2], 2*pos[2]);
+            if(modeDebug.isSelected()){
+                if(collision.get(i)){
+                    context.setFill(Color.RED);
+                }
+                else{
+                    context.setFill(Color.YELLOW);
+                }
+                context.fillOval(posX, pos[1] - pos[2], 2*pos[2], 2*pos[2]);
+            }
+            else{
+                context.drawImage(obstacles.get(i), posX, pos[1]-pos[2], 2*pos[2], 2*pos[2]);
+            }
             continue;
         }
 
@@ -188,5 +207,13 @@ public class Vue extends Application {
 
     public static int getHEIGHT() {
         return HEIGHT;
+    }
+
+    public static void draw(GraphicsContext context, Color color) {
+        context.setFill(color);
+    }
+
+    public boolean modeDebug(){
+        return modeDebug.isSelected();
     }
 }

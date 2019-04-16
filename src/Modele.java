@@ -22,10 +22,10 @@ public class Modele {
     public double[] updateGhost(double deltaTime, int height){
         ghost.update(deltaTime, height);
         double[] positions = new double[3];
-        System.out.println(ghost.getVy());
         positions[0] = ghost.getX();
         positions[1] = ghost.getY();
         positions[2] = ghost.getVx()*deltaTime;
+        System.out.println(ghost.getVx());
         return positions;
     }
 
@@ -118,6 +118,14 @@ public class Modele {
 
     public int getScore(){
         return score;
+    }
+
+    public HashMap<Integer, Boolean> testCollision(){
+        HashMap<Integer, Boolean> collision = new HashMap();
+        for (Integer i: obstacles.keySet()) {
+            collision.put(i, ghost.intersects(obstacles.get(i)));
+        }
+        return collision;
     }
 
 }
