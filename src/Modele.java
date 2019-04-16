@@ -4,14 +4,19 @@ import java.util.HashMap;
 public class Modele {
     private Fantome ghost;
 
-    private double dtObstacle=3;
+    private double dtObstacle;
 
     private int numeroObstacle;
+
+    private int score;
+
+    private int obstacleEvite;
 
     private HashMap<Integer, Obstacle> obstacles = new HashMap<>();
 
     public Modele(int width, int height){
         this.ghost = new Fantome(width/2, height/2, 30, 120, 0, 500);
+        creerObstacle();
     }
 
     public double[] updateGhost(double deltaTime, int height){
@@ -39,12 +44,24 @@ public class Modele {
 
         for (Obstacle obs: obstacles.values()) {
             obs.update(dt);
-            obs.setDepasse(ghost);
+            if(!obs.getDepasse()){
+                obs.setDepasse(ghost);
+                if(obs.getDepasse()){
+                    score+=5;
+                    obstacleEvite++;
+                    ghost.setVx(ghost.getVx()+15);
+                    if(obstacleEvite == 2){
+                        ghost.setAy(ghost.getAy() + 15);
+                        obstacleEvite=0;
+                    }
+                }
+            }
 
             //obstacle est rendu hors de la fenêtre à gauche
-            if(obs.getX() + obs.getR() - ghost.getX() < - width/2){
+            if(obs.getDepasse() && obs.getX() + obs.getR() - ghost.getX() < - width/2){
                 obstacles.remove(obs);
             }
+
         }
 
         for (Integer i: obstacles.keySet()) {
@@ -97,6 +114,10 @@ public class Modele {
                     break;
         }
 
+    }
+
+    public int getScore(){
+        return score;
     }
 
 }

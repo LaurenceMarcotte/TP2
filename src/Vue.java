@@ -37,9 +37,6 @@ public class Vue extends Application {
     //contient les images des obstacles qui sont actuellement dans le jeu
     private HashMap<Integer, Image> obstacles = new HashMap<>();
 
-    //contient les positions des obstacles sur la fenêtre
-    private HashMap<Integer, int[]> posObstacles = new HashMap<>();
-
     //position du fantôme par rapport au background
     private double positionBg = 0;
 
@@ -47,6 +44,8 @@ public class Vue extends Application {
     private boolean isPause = false;
 
     private CheckBox modeDebug;
+
+    private Text score;
 
     private double r = 30;
     private Controleur controleur;
@@ -69,7 +68,7 @@ public class Vue extends Application {
         Button pause = new Button("Pause");
         modeDebug = new CheckBox("Mode debug");
 
-        Text score = new Text("Score: 0");
+        score = new Text("Score: 0");
         barre.setAlignment(Pos.CENTER);
 
         barre.getChildren().addAll(pause, new Separator(Orientation.VERTICAL), modeDebug,
@@ -140,7 +139,8 @@ public class Vue extends Application {
 
     }
 
-    public void update(double posXGhost, double posYGhost, double deltaXGhost, HashMap<Integer, double[]> obs){
+    public void update(double posXGhost, double posYGhost, double deltaXGhost, HashMap<Integer, double[]> obs,
+                       int score){
 
         //on avance la position de la variable pour trouver où est le fantôme par rapport au background
         positionBg += deltaXGhost;
@@ -177,6 +177,9 @@ public class Vue extends Application {
             context.drawImage(obstacles.get(i), posX, pos[1]-pos[2], 2*pos[2], 2*pos[2]);
             continue;
         }
+
+        this.score.setText("Score: " + score);
+
     }
 
     public static int getWIDTH() {

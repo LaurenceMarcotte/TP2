@@ -20,7 +20,7 @@ public class Controleur {
     public void update(double deltaTime){
         double[] positions = jeu.updateGhost(deltaTime, vue.getHEIGHT());
         HashMap<Integer, double[]> obstacles = jeu.updateObstacle(deltaTime, vue.getWIDTH(), vue.getHEIGHT());
-        vue.update(positions[0], positions[1], positions[2], obstacles);
+        vue.update(positions[0], positions[1], positions[2], obstacles, jeu.getScore());
     }
 
     public void vitesseGhost(){
