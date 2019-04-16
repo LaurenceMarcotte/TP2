@@ -27,11 +27,11 @@ public class ObstacleQuant extends Obstacle {
     }*/
 
         private void quantique(){
-            double aleatoireX= Math.random()*60 -30;
-            double aleatoireY=Math.random()*60-30;
+            double aleatoireX = Math.random()*60 - 30;
+            double aleatoireY = Math.random()*60 - 30;
 
-            setX(origine+aleatoireX+Math.signum(aleatoireX)*getR());
-            setY(origine+aleatoireY+Math.signum(aleatoireY)*getR());
+            setX(getX()+aleatoireX+Math.signum(aleatoireX)*getR());
+            setY(getY()+aleatoireY+Math.signum(aleatoireY)*getR());
         }
 
 
@@ -42,6 +42,7 @@ public class ObstacleQuant extends Obstacle {
         quantique(compteur%3==0);*/
         compteur+=dt;
         if(compteur>=0.2){
+            compteur=0;
             quantique();
         }
     }

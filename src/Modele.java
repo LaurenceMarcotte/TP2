@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class Modele {
     private Fantome ghost;
 
-    private double dtObstacle;
+    private double dtObstacle=3;
 
     private int numeroObstacle;
 
