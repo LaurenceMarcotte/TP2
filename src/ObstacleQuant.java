@@ -1,14 +1,18 @@
+
+
 public class ObstacleQuant extends Obstacle {
 
     //private int compteur;
-    private double compteur;
+    //private double compteur;
 
-    private double origine;
+    double origineX;
+    private long temps= System.currentTimeMillis();
 
-    public ObstacleQuant(double origine, double y, double r, double vx, double ay) {
-        super(origine, y, r, vx, 0, ay);
+    public ObstacleQuant(double x, double y, double r, double vx, double ay) {
+        super(x, y, r, vx, 0, ay);
 
-        this.origine=origine;
+        origineX=x;
+
     }
 
 
@@ -30,8 +34,10 @@ public class ObstacleQuant extends Obstacle {
             double aleatoireX = Math.random()*60 - 30;
             double aleatoireY = Math.random()*60 - 30;
 
-            setX(getX()+aleatoireX+Math.signum(aleatoireX)*getR());
+
+            setX(origineX+aleatoireX+Math.signum(aleatoireX)*getR());
             setY(getY()+aleatoireY+Math.signum(aleatoireY)*getR());
+
         }
 
 
@@ -40,11 +46,14 @@ public class ObstacleQuant extends Obstacle {
         /*super.update(dt);
         compteur++;
         quantique(compteur%3==0);*/
-        compteur+=dt;
-        if(compteur>=0.2){
-            compteur=0;
+        //compteur++;
+        if((System.currentTimeMillis()-temps)%200==0) {// le temps est à vérif
             quantique();
         }
+
+
+
+
     }
 
 
