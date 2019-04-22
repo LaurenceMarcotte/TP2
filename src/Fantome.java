@@ -1,5 +1,15 @@
 public class Fantome extends Sphere {
 
+    /**
+     * Création d'un fantôme vu comme une sphère
+     *
+     * @param x position initiale en x
+     * @param y position initiale en y
+     * @param r rayon du fantôme
+     * @param vx vitesse initiale en x
+     * @param vy vitesse initiale en y
+     * @param ay accélération initiale en y
+     */
     public Fantome(double x, double y, double r, double vx, double vy, double ay){
         super( x, y, r, vx, vy, ay);
     }
@@ -29,6 +39,10 @@ public class Fantome extends Sphere {
         setY(Math.max(getY(), r));
     }
 
+    /**
+     * Ajustement de la vitesse en y. Ne peut pas dépasser 300 px/s
+     * @param vy nouvelle vitesse en y
+     */
     @Override
     public void setVy(double vy){
         if(vy<300){
