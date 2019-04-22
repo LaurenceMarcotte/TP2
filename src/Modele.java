@@ -191,6 +191,11 @@ public class Modele {
                 if(obstacleEvite == 2){
                     ghost.setAy(ghost.getAy() + 15);
                     obstacleEvite=0;
+                    for (Obstacle obst: obstacles.values()) {
+                        if(obst instanceof ObstacleTombant){
+                            obst.setAy(obst.getAy() + 15);
+                        }
+                    }
                 }
             }
         }
