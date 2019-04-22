@@ -164,18 +164,21 @@ public class Modele {
     }
 
     /**
+     * Vérifie si l'obstacle a été dépassé par le fantôme
      *
-     * @param obs
+     * @param obs obstacle à vérifier
      */
     public void obstacleDepasse(Obstacle obs){
         if(!obs.getDepasse()){
             obs.setDepasse(ghost);
 
+            //Si l'obstacle a été dépassé, on augmente le score et on augmente la vitesse du fantôme
             if(obs.getDepasse()){
                 score+=5;
                 obstacleEvite++;
                 ghost.setVx(ghost.getVx()+15);
 
+                //Si on a dépassé 2 obstacles, on augmente la gravité
                 if(obstacleEvite == 2){
                     ghost.setAy(ghost.getAy() + 15);
                     obstacleEvite=0;
