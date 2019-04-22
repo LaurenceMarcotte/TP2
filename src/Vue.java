@@ -52,7 +52,7 @@ public class Vue extends Application {
 
     private Controleur controleur;
 
-    private double r = controleur.rayon(); //Rayon du fantôme
+    private double r; //Rayon du fantôme
 
     public static void main(String[] args) {
         launch(args);
@@ -72,6 +72,7 @@ public class Vue extends Application {
         canvas = new Canvas(WIDTH,HEIGHT);
         controleur = new Controleur(this);
         context = canvas.getGraphicsContext2D();
+        r = controleur.rayon();
 
         HBox barre = new HBox(20); //20 est le spacing entre les éléments
         Button pause = new Button("Pause");

@@ -11,8 +11,9 @@ public class Controleur {
      * @param vue Interface graphique du jeu
      */
     public Controleur(Vue vue){
-        this.vue = vue;
         this.jeu = new Modele(vue.getWIDTH(), vue.getHEIGHT());
+        this.vue = vue;
+
     }
 
     /**

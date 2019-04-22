@@ -140,6 +140,11 @@ public class Modele {
                     obstacles.put(numeroObstacle, obstacle);
                     numeroObstacle++;
                     break;
+
+            case 4: obstacle = new ObstacleTombant(x, 400, rayon, 0, 0, -500);
+                    obstacles.put(numeroObstacle, obstacle);
+                    numeroObstacle++;
+                    break;
         }
     }
 
