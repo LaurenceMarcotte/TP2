@@ -6,6 +6,10 @@ public class Controleur {
 
     private Modele jeu;
 
+    /**
+     * Crée le Contrôleur du jeu
+     * @param vue Interface graphique du jeu
+     */
     public Controleur(Vue vue){
         this.vue = vue;
         this.jeu = new Modele(vue.getWIDTH(), vue.getHEIGHT());
@@ -36,7 +40,9 @@ public class Controleur {
         vue.update(positionGhost[0], positionGhost[1], positionGhost[2], obstacles, jeu.getScore(), collision);
     }
 
-    //Dit au modèle de modifier la vitesse du fantôme après un saut
+    /**
+     * Dit au modèle de modifier la vitesse du fantôme. Ne devrait être appelé que lorsqu'on appuie sur espace.
+     */
     public void vitesseGhost(){
         jeu.vitesseGhost();
     }

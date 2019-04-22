@@ -17,7 +17,7 @@ public class ObstacleSin extends Obstacle {
      * @param amp amplitude du sinus
      */
     public ObstacleSin(double x, double origine ,double r, double vx, double omega,double amp){
-        super(x,origine,r,vx,1.0,0);
+        super(x,origine,r,vx,omega,0);
         this.omega=omega;
         amplitude=amp;
         this.origine=origine;

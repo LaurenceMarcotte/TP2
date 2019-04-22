@@ -132,7 +132,7 @@ public class Modele {
                     break;
 
             //obstacle quantique
-            case 3: obstacle= new ObstacleQuant(x,y,rayon,0,0); // à remplir
+            case 3: obstacle= new ObstacleQuant(x,y,rayon); // à remplir
                     obstacles.put(numeroObstacle, obstacle);
                     numeroObstacle++;
                     break;
