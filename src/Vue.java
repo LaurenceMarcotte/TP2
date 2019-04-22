@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -50,6 +51,8 @@ public class Vue extends Application {
 
     private double r = 30;
     private Controleur controleur;
+
+    private String codeSecret="";
 
     public static void main(String[] args) {
         launch(args);
@@ -90,14 +93,42 @@ public class Vue extends Application {
             }
         }));
 
-        scene.setOnKeyPressed((keyEvent -> {
+        scene.setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.SPACE){
                 controleur.vitesseGhost();
             }
             else if(keyEvent.getCode() == KeyCode.ESCAPE){
                 Platform.exit();
             }
-        }));
+
+
+            if(keyEvent.getCode()==KeyCode.T){
+              codeSecret+="t";
+
+            }
+            if(keyEvent.getCode()==KeyCode.W){
+                codeSecret+="w";
+
+            }
+            if(keyEvent.getCode()==KeyCode.A){
+                codeSecret+="a";
+
+            }
+            if(keyEvent.getCode()==KeyCode.D){
+                codeSecret+="d";
+
+            }
+            if(keyEvent.getCode()==KeyCode.O){
+                codeSecret+="o";
+
+                if(codeSecret.equals("twado")){
+                    canvas.setRotate(canvas.getRotate()+180);
+                    codeSecret="";
+                }else{
+                    codeSecret="";
+                }
+            }
+        });
 
         for (int i = 0; i < 27; i++) {
             imageObstacles.add(i, new Image("file:obstacle/"+i+".png"));
