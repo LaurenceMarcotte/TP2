@@ -6,7 +6,9 @@ public class ObstacleQuant extends Obstacle {
     //private double compteur;
 
     double origineX;
-    private long temps= System.currentTimeMillis();
+
+    private double tempsActuel;
+
 
     public ObstacleQuant(double x, double y, double r, double vx, double ay) {
         super(x, y, r, vx, 0, ay);
@@ -47,8 +49,12 @@ public class ObstacleQuant extends Obstacle {
         compteur++;
         quantique(compteur%3==0);*/
         //compteur++;
-        if((System.currentTimeMillis()-temps)%200==0) {// le temps est à vérif
+        tempsActuel+=dt;
+
+        if(tempsActuel>=0.4) {// le temps est à vérif (valeur normale serait 0.2
             quantique();
+            tempsActuel=0;
+
         }
 
 
