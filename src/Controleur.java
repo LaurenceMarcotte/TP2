@@ -6,6 +6,8 @@ public class Controleur {
 
     private Modele jeu;
 
+    private boolean reinitialise = false;
+
     /**
      * Crée le Contrôleur du jeu
      * @param vue Interface graphique du jeu
@@ -36,9 +38,14 @@ public class Controleur {
         * réinitialise le jeu*/
         if (collision.containsValue(true) && !vue.modeDebug()){
             jeu = new Modele(vue.getWIDTH(), vue.getHEIGHT());
+            obstacles = new HashMap<>();
+            collision = new HashMap<>();
+            reinitialise = true;
         }
 
-        vue.update(positionGhost[0], positionGhost[1], positionGhost[2], obstacles, jeu.getScore(), collision);
+        vue.update(positionGhost[0], positionGhost[1], positionGhost[2], obstacles, jeu.getScore(), collision,
+                reinitialise);
+        reinitialise = false;
     }
 
     /**

@@ -110,7 +110,7 @@ public class Modele {
          * Le 3 représente le nb de types d'obstacles. Si c'est 0, on a un obstacle simple, si c'est 1, un obstacle
          * sinus, si c'est 3 un obstacle quantique.
          */
-        int objet= (int)Math.ceil(Math.random()*3); //
+        int objet= (int)Math.ceil(Math.random()*4); //
 
         Obstacle obstacle;
 
@@ -141,7 +141,7 @@ public class Modele {
                     numeroObstacle++;
                     break;
 
-            case 4: obstacle = new ObstacleTombant(x, 400, rayon, 0, 0, -500);
+            case 4: obstacle = new ObstacleTombant(x, 0, rayon, 0, 0, 100);
                     obstacles.put(numeroObstacle, obstacle);
                     numeroObstacle++;
                     break;

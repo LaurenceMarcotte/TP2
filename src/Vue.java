@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -169,7 +170,7 @@ public class Vue extends Application {
      * @param collision HashMap qui dit si un obstacle est entré en collision avec le fantôme
      */
     public void update(double posXGhost, double posYGhost, double deltaXGhost, HashMap<Integer, double[]> obs,
-                       int score, HashMap<Integer, Boolean> collision){
+                       int score, HashMap<Integer, Boolean> collision, boolean reinitialise){
 
         //on avance la position de la variable pour trouver où est le fantôme par rapport au background
         positionBg += deltaXGhost;
@@ -200,8 +201,13 @@ public class Vue extends Application {
             context.drawImage(ghost, WIDTH / 2 - r / 2, posYGhost - r / 2, 2*r,2*r);
         }
 
+        if (reinitialise) {
+            obstacles = new HashMap<>();
+        }
+
         //Mise à jour des images des obstacles
         for (Integer i:obs.keySet()) {
+
             //Dans le cas où on a un nouvel obstacle dans le jeu, on lui associe une image
             if(!obstacles.containsKey(i)){
                 obstacles.put(i,imageObstacles.get((int)(Math.random()*27)));
@@ -252,4 +258,5 @@ public class Vue extends Application {
     public boolean modeDebug(){
         return modeDebug.isSelected();
     }
+
 }
