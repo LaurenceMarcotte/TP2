@@ -6,6 +6,7 @@ public class ObstacleQuant extends Obstacle {
     //private double compteur;
 
     double origineX;
+    double origineY;
 
     private double tempsActuel;
 
@@ -14,6 +15,7 @@ public class ObstacleQuant extends Obstacle {
         super(x, y, r, vx, 0, ay);
 
         origineX=x;
+        origineY=y;
 
     }
 
@@ -38,7 +40,7 @@ public class ObstacleQuant extends Obstacle {
 
 
             setX(origineX+aleatoireX+Math.signum(aleatoireX)*getR());
-            setY(getY()+aleatoireY+Math.signum(aleatoireY)*getR());
+            setY(origineY+aleatoireY+Math.signum(aleatoireY)*getR());
 
         }
 
