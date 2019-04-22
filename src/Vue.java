@@ -139,6 +139,7 @@ public class Vue extends Application {
                 if(codeSecret.equals("twado")){
                     canvas.setRotate(canvas.getRotate()+180);
                     codeSecret="";
+                    //il manque le truc du fantome ici
                 }else{
                     codeSecret="";
                 }
