@@ -111,7 +111,6 @@ public class Vue extends Application {
             public void handle(long now) {
                 if (lastTime == 0 || isPause) {
                     lastTime = now;
-                    return;
                 }
                 double deltaTime = (now - lastTime) * 1e-9;
                 context.clearRect(0, 0, WIDTH, HEIGHT);
@@ -163,12 +162,7 @@ public class Vue extends Application {
                 background.getWidth()-positionBg, 0, positionBg, HEIGHT);
 
         if(modeDebug.isSelected()){
-            if(collision.containsValue(true)){
-                context.setFill(Color.RED);
-            }
-            else{
-                context.setFill(Color.BLACK);
-            }
+            context.setFill(Color.BLACK);
             context.fillOval(WIDTH/2 - r, posYGhost - r, 2*r,2*r);
         }
         else {

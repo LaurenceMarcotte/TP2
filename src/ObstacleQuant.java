@@ -39,8 +39,8 @@ public class ObstacleQuant extends Obstacle {
             double aleatoireY = Math.random()*60 - 30;
 
 
-            setX(origineX+aleatoireX+Math.signum(aleatoireX)*getR());
-            setY(origineY+aleatoireY+Math.signum(aleatoireY)*getR());
+            setX(getX()+aleatoireX+Math.signum(aleatoireX)*getR());
+            setY(getY()+aleatoireY+Math.signum(aleatoireY)*getR());
 
         }
 

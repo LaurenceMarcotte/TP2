@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Modele {
@@ -25,7 +24,7 @@ public class Modele {
         positions[0] = ghost.getX();
         positions[1] = ghost.getY();
         positions[2] = ghost.getVx()*deltaTime;
-        System.out.println(ghost.getVx());
+
         return positions;
     }
 
