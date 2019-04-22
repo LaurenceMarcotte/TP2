@@ -55,6 +55,8 @@ public class Vue extends Application {
 
     private double r; //Rayon du fantôme
 
+    private String codeSecret="";
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -106,14 +108,42 @@ public class Vue extends Application {
             });
         }));
 
-        scene.setOnKeyPressed((keyEvent -> {
+        scene.setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.SPACE){
                 controleur.vitesseGhost();
             }
             else if(keyEvent.getCode() == KeyCode.ESCAPE){
                 Platform.exit();
             }
-        }));
+
+
+            if(keyEvent.getCode()==KeyCode.T){
+              codeSecret+="t";
+
+            }
+            if(keyEvent.getCode()==KeyCode.W){
+                codeSecret+="w";
+
+            }
+            if(keyEvent.getCode()==KeyCode.A){
+                codeSecret+="a";
+
+            }
+            if(keyEvent.getCode()==KeyCode.D){
+                codeSecret+="d";
+
+            }
+            if(keyEvent.getCode()==KeyCode.O){
+                codeSecret+="o";
+
+                if(codeSecret.equals("twado")){
+                    canvas.setRotate(canvas.getRotate()+180);
+                    codeSecret="";
+                }else{
+                    codeSecret="";
+                }
+            }
+        });
 
         //On va chercher toutes les images des obstacles
         for (int i = 0; i < 27; i++) {
