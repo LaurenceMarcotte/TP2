@@ -49,6 +49,10 @@ public class Modele {
         ghost.setVy(-300);
     }
 
+    public double getRayon(){
+        return ghost.getR();
+    }
+
     /**
      * Met à jour les positions de tous les obstacles en jeu. Commence par crééer des obstacles si 3 secondes s'est
      * écoulé depuis la dernière création d'obstacle.
@@ -186,5 +190,4 @@ public class Modele {
             }
         }
     }
-
 }

@@ -46,4 +46,8 @@ public class Controleur {
     public void vitesseGhost(){
         jeu.vitesseGhost();
     }
+
+    public double rayon(){
+        return jeu.getRayon();
+    }
 }

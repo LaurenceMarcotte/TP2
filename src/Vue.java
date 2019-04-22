@@ -22,6 +22,7 @@ import java.util.HashMap;
 
 public class Vue extends Application {
 
+    //Hauteur et largeur du canvas
     private static final int WIDTH = 640, HEIGHT = 400;
 
     private Stage stage;
@@ -29,6 +30,7 @@ public class Vue extends Application {
     private Canvas canvas;
     private GraphicsContext context;
 
+    //Image du fantôme et du background
     private Image ghost = new Image("file:ghost.png");
     private Image background = new Image("file:bg.png");
 
@@ -48,27 +50,32 @@ public class Vue extends Application {
 
     private Text score;
 
-    private double r = 30;
     private Controleur controleur;
+
+    private double r = controleur.rayon(); //Rayon du fantôme
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Interface graphique
+     * @param stage fenêtre de l'interface
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         VBox root = new VBox(5);
+
         this.stage = stage;
         scene = new Scene(root, WIDTH, HEIGHT+40);
         canvas = new Canvas(WIDTH,HEIGHT);
         controleur = new Controleur(this);
-
         context = canvas.getGraphicsContext2D();
 
         HBox barre = new HBox(20); //20 est le spacing entre les éléments
         Button pause = new Button("Pause");
         modeDebug = new CheckBox("Mode debug");
-
         score = new Text("Score: 0");
         barre.setAlignment(Pos.CENTER);
 
@@ -76,6 +83,7 @@ public class Vue extends Application {
                 new Separator(Orientation.VERTICAL), score);
         root.getChildren().addAll(canvas, barre);
 
+        //Ce qui se passe quand on clique sur pause ou sur le checkbox
         pause.setOnAction((actionEvent -> {
             isPause = !isPause;
             if(isPause){
@@ -105,22 +113,26 @@ public class Vue extends Application {
             }
         }));
 
+        //On va chercher toutes les images des obstacles
         for (int i = 0; i < 27; i++) {
             imageObstacles.add(i, new Image("file:obstacle/"+i+".png"));
         }
 
+        //Animation ici
         AnimationTimer timer = new AnimationTimer() {
             private long lastTime = 0;
 
-
             @Override
             public void handle(long now) {
+                //Si le bouton pause a été enfoncé, on met le deltaTime toujours à 0
                 if (lastTime == 0 || isPause) {
                     lastTime = now;
                 }
+
                 double deltaTime = (now - lastTime) * 1e-9;
                 context.clearRect(0, 0, WIDTH, HEIGHT);
 
+                //On demande au contrôleur de mettre à jour l'affichage
                 controleur.update(deltaTime);
                 lastTime = now;
             }
@@ -145,6 +157,16 @@ public class Vue extends Application {
 
     }
 
+    /**
+     * Mise à jour de l'affichage graphique.
+     *
+     * @param posXGhost position en x du fantôme
+     * @param posYGhost position en y du fantôme
+     * @param deltaXGhost déplacement en x du fantôme
+     * @param obs HashMap qui contient les nouvelles positions des obstacles
+     * @param score le score du joueur
+     * @param collision HashMap qui dit si un obstacle est entré en collision avec le fantôme
+     */
     public void update(double posXGhost, double posYGhost, double deltaXGhost, HashMap<Integer, double[]> obs,
                        int score, HashMap<Integer, Boolean> collision){
 
@@ -167,6 +189,7 @@ public class Vue extends Application {
         context.drawImage(background, 0, 0, positionBg, background.getHeight(),
                 background.getWidth()-positionBg, 0, positionBg, HEIGHT);
 
+        //Mise à jour de l'image du fantôme
         if(modeDebug.isSelected()){
             context.setFill(Color.BLACK);
             context.fillOval(WIDTH/2 - r, posYGhost - r, 2*r,2*r);
@@ -176,12 +199,16 @@ public class Vue extends Application {
             context.drawImage(ghost, WIDTH / 2 - r / 2, posYGhost - r / 2, 2*r,2*r);
         }
 
+        //Mise à jour des images des obstacles
         for (Integer i:obs.keySet()) {
+            //Dans le cas où on a un nouvel obstacle dans le jeu, on lui associe une image
             if(!obstacles.containsKey(i)){
                 obstacles.put(i,imageObstacles.get((int)(Math.random()*27)));
             }
+
             double[] pos = obs.get(i);
-            double posX = pos[0]-posXGhost-pos[2]+WIDTH/2;
+            double posX = pos[0]-posXGhost-pos[2]+WIDTH/2.0;
+
             if(modeDebug.isSelected()){
                 if(collision.get(i)){
                     context.setFill(Color.RED);
@@ -194,25 +221,33 @@ public class Vue extends Application {
             else{
                 context.drawImage(obstacles.get(i), posX, pos[1]-pos[2], 2*pos[2], 2*pos[2]);
             }
-            continue;
         }
 
+        //Mise à jour du score
         this.score.setText("Score: " + score);
 
     }
 
+    /**
+     * Getter de la largeur de la fenêtre
+     * @return largeur de la fenêtre
+     */
     public static int getWIDTH() {
         return WIDTH;
     }
 
+    /**
+     * Getter de la hauteur du canvas
+     * @return hauteur du canvas
+     */
     public static int getHEIGHT() {
         return HEIGHT;
     }
 
-    public static void draw(GraphicsContext context, Color color) {
-        context.setFill(color);
-    }
-
+    /**
+     * Dit si le checkbox est sélectionné ou pas
+     * @return boolean du checkbox, si vrai on est dans le mode Debug, sinon faux.
+     */
     public boolean modeDebug(){
         return modeDebug.isSelected();
     }
