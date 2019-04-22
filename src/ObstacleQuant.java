@@ -51,7 +51,7 @@ public class ObstacleQuant extends Obstacle {
         //compteur++;
         tempsActuel+=dt;
 
-        if(tempsActuel>=0.4) {// le temps est à vérif (valeur normale serait 0.2
+        if(tempsActuel>=0.2) {// le temps est à vérif (valeur normale serait 0.2
             quantique();
             tempsActuel=0;
 
