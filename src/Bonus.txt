@@ -1,9 +1,15 @@
 
 Nous avons ajouté un atribut string codeSecret qui va prendre
 additionner des caractères et le comparer finalement à twado
-pour ensuite rotate le canva et le miroir. Lorsqu'on appuie sur l'une
-des touches t,w,a,d , celles-ci ajoute respectivement "t","w","a" et "d"
-à la String codeSecret. Lorsqu'on appuie sur o, "o" est ajouté à
-la fin de la string et  si celle-ci est égale à "twado", l'image
-est rotationnée. Sinon, la commande est incorecte et codeSecret
-redeviens vide.
+avant d'arriver et changer le système de coordonnée du caneva
+pour inverse celui-ci. On utilise aussi l'attribut booléen
+indiceSecret pour déterminer vers quel système de coordonnées
+on envoit le canevas ( inversé ou original). Lorsqu'on tape
+les touches T,W,A et D , on ajoute respectivement à l'attribut
+codeSecret les lettres "t","w","a" et "d". Lorsque O est tapé,
+on ajoute "o" à codeSecret et on teste si la String est
+équivalente à "twado" si elle l'est, le système de coord est
+changé( si indiceSecret= true-> version inversé, sinon vers
+le système normal) . On réinitialise la valeur de codeSecret
+et indiceSecret prend la valeur qu'elle n'avait pas
+originellement.

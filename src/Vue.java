@@ -56,6 +56,7 @@ public class Vue extends Application {
     private double r; //Rayon du fantôme
 
     private String codeSecret="";
+    private boolean indiceSecret=true;
 
     public static void main(String[] args) {
         launch(args);
@@ -137,11 +138,22 @@ public class Vue extends Application {
                 codeSecret+="o";
 
                 if(codeSecret.equals("twado")){
-                    canvas.setRotate(canvas.getRotate()+180);
+                    if(indiceSecret) {
+                        canvas.setScaleX(1);
+                        canvas.setScaleY(-1);
+                        canvas.getGraphicsContext2D().restore();
+                        indiceSecret=false;
+                    }else{
+                        canvas.setScaleX(1);
+                        canvas.setScaleY(1);
+                        canvas.getGraphicsContext2D().restore();
+                        indiceSecret=true;
+                    }
                     codeSecret="";
-                    //il manque le truc du fantome ici
+
                 }else{
                     codeSecret="";
+
                 }
             }
         });
