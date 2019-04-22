@@ -1,23 +1,37 @@
 import java.util.HashMap;
 
 public class Modele {
+
     private Fantome ghost;
 
-    private double dtObstacle;
+    private double dtObstacle; //garde l'intervalle de temps afin de vérifier s'il est temps d'ajouter un obstacle
 
-    private int numeroObstacle;
+    private int numeroObstacle; //numéro du dernier obstacle initialisé afin que les nouveaux aient un numéro différent
 
     private int score;
 
-    private int obstacleEvite;
+    private int obstacleEvite; //nombre d'osbtacle évité, si on en évite 2, on réinitialise ce int
 
-    private HashMap<Integer, Obstacle> obstacles = new HashMap<>();
+    private HashMap<Integer, Obstacle> obstacles = new HashMap<>(); //Contient les obstacles en jeu
 
+    /**
+     * Création du modèle/jeu. Commence par créé le fantôme ainsi que le premier obstacle
+     *
+     * @param width largeur du jeu
+     * @param height hauteur du jeu
+     */
     public Modele(int width, int height){
         this.ghost = new Fantome(width/2, height/2, 30, 120, 0, 500);
-        creerObstacle();
+        creerObstacle(); //Création du premier obstacle
     }
 
+    /**
+     * Sert à mettre à jour la position du fantôme.
+     *
+     * @param deltaTime
+     * @param height
+     * @return
+     */
     public double[] updateGhost(double deltaTime, int height){
         ghost.update(deltaTime, height);
         double[] positions = new double[3];

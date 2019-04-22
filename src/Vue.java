@@ -90,6 +90,12 @@ public class Vue extends Application {
             }
         }));
 
+        modeDebug.setOnAction((actionEvent -> {
+            Platform.runLater(() -> {
+                canvas.requestFocus();
+            });
+        }));
+
         scene.setOnKeyPressed((keyEvent -> {
             if(keyEvent.getCode() == KeyCode.SPACE){
                 controleur.vitesseGhost();
