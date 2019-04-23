@@ -150,7 +150,6 @@ public class Vue extends Application {
                         indiceSecret=true;
                     }
                 }
-                System.out.println(codeSecret);
                 codeSecret="";
             }
         });
@@ -238,7 +237,7 @@ public class Vue extends Application {
         }
         else {
             //Dessin du fantôme
-            context.drawImage(ghost, WIDTH / 2 - r / 2, posYGhost - r / 2, 2*r,2*r);
+            context.drawImage(ghost, WIDTH / 2 - r, posYGhost - r, 2*r,2*r);
         }
 
         if (reinitialise) {
