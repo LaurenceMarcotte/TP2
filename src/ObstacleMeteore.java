@@ -1,8 +1,8 @@
-public class ObstacleTombant extends Obstacle{
+public class ObstacleMeteore extends Obstacle{
 
     private double grossissement=40;
 
-    public ObstacleTombant(double x, double y, double r, double vx, double vy, double ay){
+    public ObstacleMeteore(double x, double y, double r, double vx, double vy, double ay){
         super(x,y,r,vx,vy,ay);
     }
 

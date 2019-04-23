@@ -141,7 +141,7 @@ public class Modele {
                     numeroObstacle++;
                     break;
 
-            case 4: obstacle = new ObstacleTombant(x, 0, rayon, 0, 0, ghost.getAy()-300);
+            case 4: obstacle = new ObstacleMeteore(x, 0, rayon, 0, 0, ghost.getAy()-300);
                     obstacles.put(numeroObstacle, obstacle);
                     System.out.println(obstacle.getAy());
                     numeroObstacle++;
