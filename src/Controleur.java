@@ -50,6 +50,7 @@ public class Controleur {
 
     /**
      * Test si le code secret a été entré. Si oui, on applique le code secret et on inverse le jeu.
+     * (mais c'est un secret, shhhhh)
      * @return vrai si le code secret a été entré, faux sinon
      */
     public boolean testSecret(){// c un secret ;)
