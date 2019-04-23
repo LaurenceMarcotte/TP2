@@ -284,19 +284,22 @@ public class Vue extends Application {
         return modeDebug.isSelected();
     }
 
+
+    /**
+     * Getter de l'attribut codeSecret
+     * @return String de codeSecret
+     */
     public String getCodeSecret(){
         return codeSecret;
     }
 
+    /**
+     * setter de l'attribut codeSecret
+     * @param u String, nouvelle valeur de codeSecret
+     */
     public void setCodeSecret(String u){
         codeSecret=u;
     }
 
-    public boolean getIndiceSecret(){
-        return indiceSecret;
-    }
 
-    public void setIndiceSecret(Boolean u){
-        indiceSecret=u;
-    }
 }
