@@ -15,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -26,8 +25,6 @@ public class Vue extends Application {
     //Hauteur et largeur du canvas
     private static final int WIDTH = 640, HEIGHT = 400;
 
-    private Stage stage;
-    private Scene scene;
     private Canvas canvas;
     private GraphicsContext context;
 
@@ -71,8 +68,7 @@ public class Vue extends Application {
     public void start(Stage stage) throws Exception {
         VBox root = new VBox(5);
 
-        this.stage = stage;
-        scene = new Scene(root, WIDTH, HEIGHT+40);
+        Scene scene = new Scene(root, WIDTH, HEIGHT+40);
         canvas = new Canvas(WIDTH,HEIGHT);
         controleur = new Controleur(this);
         context = canvas.getGraphicsContext2D();
@@ -89,7 +85,7 @@ public class Vue extends Application {
         root.getChildren().addAll(canvas, barre);
 
         //Ce qui se passe quand on clique sur pause ou sur le checkbox
-        pause.setOnAction((actionEvent -> {
+        pause.setOnAction(actionEvent -> {
             isPause = !isPause;
             if(isPause){
                 pause.setText("Resume");
@@ -101,7 +97,7 @@ public class Vue extends Application {
                     canvas.requestFocus();
                 });
             }
-        }));
+        });
 
         modeDebug.setOnAction((actionEvent -> {
             Platform.runLater(() -> {
@@ -219,11 +215,11 @@ public class Vue extends Application {
         //Mise à jour de l'image du fantôme
         if(modeDebug.isSelected()){
             context.setFill(Color.BLACK);
-            context.fillOval(WIDTH/2 - r, posYGhost - r, 2*r,2*r);
+            context.fillOval(WIDTH/2.0 - r, posYGhost - r, 2*r,2*r);
         }
         else {
             //Dessin du fantôme
-            context.drawImage(ghost, WIDTH / 2 - r / 2, posYGhost - r / 2, 2*r,2*r);
+            context.drawImage(ghost, WIDTH / 2.0 - r / 2, posYGhost - r / 2, 2*r,2*r);
         }
 
         if (reinitialise) {
