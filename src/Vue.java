@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -114,44 +115,29 @@ public class Vue extends Application {
             }
             else if(keyEvent.getCode() == KeyCode.ESCAPE){
                 Platform.exit();
-            }
-
-
-            if(keyEvent.getCode()==KeyCode.T){
-              codeSecret+="t";
-
-            }
-            if(keyEvent.getCode()==KeyCode.W){
-                codeSecret+="w";
-
-            }
-            if(keyEvent.getCode()==KeyCode.A){
-                codeSecret+="a";
-
-            }
-            if(keyEvent.getCode()==KeyCode.D){
-                codeSecret+="d";
-
-            }
-            if(keyEvent.getCode()==KeyCode.O) {
-                codeSecret += "o";
-            }
-            if(codeSecret.length() == 5){
-                if(codeSecret.equals("twado")){
-                    if(indiceSecret) {
-                        canvas.setScaleX(1);
-                        canvas.setScaleY(-1);
-                        canvas.getGraphicsContext2D().restore();
-                        indiceSecret=false;
-                    }else{
-                        canvas.setScaleX(1);
-                        canvas.setScaleY(1);
-                        canvas.getGraphicsContext2D().restore();
-                        indiceSecret=true;
-                    }
+            }else{
+                codeSecret+=keyEvent.getText();
+                System.out.println(codeSecret);
+                if(codeSecret.length()==5){
+                   if(controleur.testSecret()) {
+                       if (indiceSecret) {
+                           canvas.setScaleX(1);
+                           canvas.setScaleY(-1);
+                           canvas.getGraphicsContext2D().restore();
+                           indiceSecret = false;
+                       } else {
+                           canvas.setScaleX(1);
+                           canvas.setScaleY(1);
+                           canvas.getGraphicsContext2D().restore();
+                           indiceSecret = true;
+                       }
+                   }
                 }
-                codeSecret="";
+
             }
+
+
+
         });
 
         //On va chercher toutes les images des obstacles
@@ -237,7 +223,7 @@ public class Vue extends Application {
         }
         else {
             //Dessin du fantôme
-            context.drawImage(ghost, WIDTH / 2 - r, posYGhost - r, 2*r,2*r);
+            context.drawImage(ghost, WIDTH / 2 - r / 2, posYGhost - r / 2, 2*r,2*r);
         }
 
         if (reinitialise) {
@@ -298,4 +284,19 @@ public class Vue extends Application {
         return modeDebug.isSelected();
     }
 
+    public String getCodeSecret(){
+        return codeSecret;
+    }
+
+    public void setCodeSecret(String u){
+        codeSecret=u;
+    }
+
+    public boolean getIndiceSecret(){
+        return indiceSecret;
+    }
+
+    public void setIndiceSecret(Boolean u){
+        indiceSecret=u;
+    }
 }
