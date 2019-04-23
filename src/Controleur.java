@@ -47,6 +47,15 @@ public class Controleur {
                 reinitialise);
         reinitialise = false;
     }
+    public boolean testSecret(){// c un secret ;)
+        boolean u=false;
+        if(vue.getCodeSecret().equals("twado")){
+
+            u=true;
+        }
+        vue.setCodeSecret("");
+        return u;
+}
 
     /**
      * Dit au modèle de modifier la vitesse du fantôme. Ne devrait être appelé que lorsqu'on appuie sur espace.
