@@ -49,10 +49,8 @@ public class Controleur {
     }
 
     /**
-     * regarde si on doit activer le comportement secret dans la vue
-     * teste si vue.codeSecret est = à "twado"
-     * mais c'est un secret donc shhhhh
-     * @return boolean true si activé, false sinon
+     * Test si le code secret a été entré. Si oui, on applique le code secret et on inverse le jeu.
+     * @return vrai si le code secret a été entré, faux sinon
      */
     public boolean testSecret(){// c un secret ;)
         boolean u=false;
@@ -71,6 +69,10 @@ public class Controleur {
         jeu.vitesseGhost();
     }
 
+    /**
+     * Donne le rayon du fantôme
+     * @return le rayon du fantôme
+     */
     public double rayon(){
         return jeu.getRayon();
     }
