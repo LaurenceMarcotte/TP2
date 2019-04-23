@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Modele {
@@ -21,7 +22,7 @@ public class Modele {
      * @param height hauteur du jeu
      */
     public Modele(int width, int height){
-        this.ghost = new Fantome(width/2, height/2, 30, 120, 0, 500);
+        this.ghost = new Fantome(width/2.0, height/2.0, 30, 120, 0, 500);
         creerObstacle(); //Création du premier obstacle
     }
 
@@ -59,10 +60,9 @@ public class Modele {
      *
      * @param dt temps écoulé depuis la dernière mise à jour
      * @param width largeur de la fenêtre de jeu
-     * @param height hauteur de la fenêtre de jeu
      * @return nouvelles positions des obstacles dans un hashmap qui associe les positions avec le numéro de l'osbtacle
      */
-    public HashMap<Integer, double[]> updateObstacle(double dt, int width, int height){
+    public HashMap<Integer, double[]> updateObstacle(double dt, int width){
         dtObstacle+=dt;
 
         //On crée un nouvel obstacle à chaque 3 secondes
@@ -71,16 +71,21 @@ public class Modele {
             dtObstacle=0;
         }
 
+        //Contient les obstacles à retirer lorsqu'ils sont rendus hors de la fenêtre à gauche
+        ArrayList<Obstacle> aRetirer = new ArrayList<>();
+
         //mise à jour des positions des obstacles ici
         for (Obstacle obs: obstacles.values()) {
             obs.update(dt);
             obstacleDepasse(obs); //vérifie si l'osbtacle a été dépassé
 
             //obstacle est rendu hors de la fenêtre à gauche, on le retire/détruit
-            if(obs.getDepasse() && obs.getX() + obs.getR() - ghost.getX() < - width/2){
-                obstacles.remove(obs);
+            if(obs.getDepasse() && obs.getX()+obs.getR() - ghost.getX() < -width/2) {
+                aRetirer.add(obs);
             }
         }
+
+        obstacles.values().removeAll(aRetirer);
 
         //va contenir les nouvelles positions de chaque obstacle
         HashMap<Integer, double[]> o = new HashMap<>();
@@ -163,7 +168,7 @@ public class Modele {
      * obstacle.
      */
     public HashMap<Integer, Boolean> testCollision(){
-        HashMap<Integer, Boolean> collision = new HashMap();
+        HashMap<Integer, Boolean> collision = new HashMap<>();
 
         for (Integer i: obstacles.keySet()) {
             collision.put(i, ghost.intersects(obstacles.get(i)));
