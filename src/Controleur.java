@@ -47,6 +47,13 @@ public class Controleur {
                 reinitialise);
         reinitialise = false;
     }
+
+    /**
+     * regarde si on doit activer le comportement secret dans la vue
+     * teste si vue.codeSecret est = à "twado"
+     * mais c'est un secret donc shhhhh
+     * @return boolean true si activé, false sinon
+     */
     public boolean testSecret(){// c un secret ;)
         boolean u=false;
         if(vue.getCodeSecret().equals("twado")){
