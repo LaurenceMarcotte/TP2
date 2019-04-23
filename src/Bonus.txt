@@ -1,12 +1,12 @@
 
 Nous avons ajouté un attribut string codeSecret qui va additionner
 des caractères et le comparer finalement à twado
-avant d'arriver et changer le système de coordonnée du caneva
-pour inverse celui-ci. On utilise aussi l'attribut booléen
+avant d'arriver et de changer le système de coordonnée du caneva
+pour inverser celui-ci. On utilise aussi l'attribut booléen
 indiceSecret pour déterminer vers quel système de coordonnées
-on envoie le canevas ( inversé ou original). lorsqu'on tape
-les caractères tapés sont ajoutés à la String codeSecret,
-lorsque celle-ci atteint une longeur de 5, on vérifie si
+on envoie le canevas ( inversé ou original). Lorsqu'on tape,
+les caractères tapés sont ajoutés à la String codeSecret.
+Lorsque celle-ci atteint une longeur de 5, on vérifie si
 le bon code ( soit twado) a été tapé. Si c'est le cas, on
 change le système de coord en fonction de la valeur de
 indiceSecret.
