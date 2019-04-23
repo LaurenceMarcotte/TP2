@@ -4,12 +4,9 @@ des caractères et le comparer finalement à twado
 avant d'arriver et changer le système de coordonnée du caneva
 pour inverse celui-ci. On utilise aussi l'attribut booléen
 indiceSecret pour déterminer vers quel système de coordonnées
-on envoie le canevas ( inversé ou original). Lorsqu'on tape
-les touches T,W,A et D , on ajoute respectivement à l'attribut
-codeSecret les lettres "t","w","a" et "d". Lorsque O est tapé,
-on ajoute "o" à codeSecret et on teste si la String est
-équivalente à "twado" si elle l'est, le système de coord est
-changé( si indiceSecret= true-> version inversé, sinon vers
-le système normal) . On réinitialise la valeur de codeSecret
-et indiceSecret prend la valeur qu'elle n'avait pas
-originellement.
+on envoie le canevas ( inversé ou original). lorsqu'on tape
+les caractères tapés sont ajoutés à la String codeSecret,
+lorsque celle-ci atteint une longeur de 5, on vérifie si
+le bon code ( soit twado) a été tapé. Si c'est le cas, on
+change le système de coord en fonction de la valeur de
+indiceSecret.
