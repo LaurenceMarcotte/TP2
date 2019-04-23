@@ -141,8 +141,9 @@ public class Modele {
                     numeroObstacle++;
                     break;
 
-            case 4: obstacle = new ObstacleTombant(x, 0, rayon, 0, 0, 100);
+            case 4: obstacle = new ObstacleTombant(x, 0, rayon, 0, 0, ghost.getAy()-300);
                     obstacles.put(numeroObstacle, obstacle);
+                    System.out.println(obstacle.getAy());
                     numeroObstacle++;
                     break;
         }
@@ -191,11 +192,6 @@ public class Modele {
                 if(obstacleEvite == 2){
                     ghost.setAy(ghost.getAy() + 15);
                     obstacleEvite=0;
-                    for (Obstacle obst: obstacles.values()) {
-                        if(obst instanceof ObstacleTombant){
-                            obst.setAy(obst.getAy() + 15);
-                        }
-                    }
                 }
             }
         }

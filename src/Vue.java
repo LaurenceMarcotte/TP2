@@ -15,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -134,9 +133,10 @@ public class Vue extends Application {
                 codeSecret+="d";
 
             }
-            if(keyEvent.getCode()==KeyCode.O){
-                codeSecret+="o";
-
+            if(keyEvent.getCode()==KeyCode.O) {
+                codeSecret += "o";
+            }
+            if(codeSecret.length() == 5){
                 if(codeSecret.equals("twado")){
                     if(indiceSecret) {
                         canvas.setScaleX(1);
@@ -149,12 +149,9 @@ public class Vue extends Application {
                         canvas.getGraphicsContext2D().restore();
                         indiceSecret=true;
                     }
-                    codeSecret="";
-
-                }else{
-                    codeSecret="";
-
                 }
+                System.out.println(codeSecret);
+                codeSecret="";
             }
         });
 

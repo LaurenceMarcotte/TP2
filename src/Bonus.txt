@@ -1,10 +1,10 @@
 
-Nous avons ajouté un atribut string codeSecret qui va prendre
-additionner des caractères et le comparer finalement à twado
+Nous avons ajouté un attribut string codeSecret qui va additionner
+des caractères et le comparer finalement à twado
 avant d'arriver et changer le système de coordonnée du caneva
 pour inverse celui-ci. On utilise aussi l'attribut booléen
 indiceSecret pour déterminer vers quel système de coordonnées
-on envoit le canevas ( inversé ou original). Lorsqu'on tape
+on envoie le canevas ( inversé ou original). Lorsqu'on tape
 les touches T,W,A et D , on ajoute respectivement à l'attribut
 codeSecret les lettres "t","w","a" et "d". Lorsque O est tapé,
 on ajoute "o" à codeSecret et on teste si la String est
